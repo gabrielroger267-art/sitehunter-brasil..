@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d18">
+<title>SiteHunter Brasil — Prospecção inteligente</title>
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>
+:root{--bg:#080d18;--panel:#101827;--panel2:#141f31;--line:#25344a;--text:#edf4ff;--muted:#91a2ba;--blue:#4d8dff;--cyan:#55d6e8;--green:#35d39a;--yellow:#ffcc66;--red:#ff7777}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#142545 0,transparent 35%),var(--bg);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;background:var(--blue);color:white;font-weight:700}button:disabled{opacity:.5;cursor:not-allowed}.secondary{background:#202d41;border:1px solid var(--line)}.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}.danger{background:#54262d}.wrap{max-width:1400px;margin:auto;padding:22px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}.brand{display:flex;align-items:center;gap:13px}.logo{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#4d8dff,#55d6e8);color:#06101e;font-size:24px;font-weight:900;box-shadow:0 8px 30px #367bff33}.brand h1{margin:0;font-size:22px;letter-spacing:.3px}.brand p{margin:4px 0 0;color:var(--muted);font-size:12px}.badge{border:1px solid #236d5a;color:#80f1c8;background:#123328;padding:7px 11px;border-radius:99px;font-size:12px;font-weight:800}.hero{padding:25px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,#111e33dd,#0c1422ee);margin-bottom:18px}.hero h2{font-size:clamp(24px,4vw,36px);line-height:1.12;margin:0 0 10px}.hero h2 span{color:var(--cyan)}.hero p{color:var(--muted);max-width:780px;line-height:1.6;margin:0}.searchgrid{display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:12px;margin-top:22px}.field label{display:block;color:#a9bad1;font-size:12px;font-weight:700;margin:0 0 7px}.field input,.field select{width:100%;background:#080f1c;border:1px solid #2a3b53;color:var(--text);border-radius:10px;padding:12px;outline:none}.field input:focus,.field select:focus{border-color:var(--blue)}.search-action{display:flex;align-items:end}.search-action button{height:43px;white-space:nowrap}.smallnote{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}.statusline{display:none;margin-top:14px;padding:12px 14px;border-radius:10px;background:#101f34;border:1px solid #263d5b;color:#cfe2ff;font-size:13px;line-height:1.5}.statusline.show{display:block}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat,.panel{background:#0f1827;border:1px solid var(--line);border-radius:16px}.stat{padding:17px}.stat .label{font-size:12px;color:var(--muted)}.stat .num{font-size:27px;font-weight:850;margin-top:7px}.stat .sub{font-size:11px;color:#7f91ab;margin-top:5px}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.panel{padding:17px;min-width:0}.panelhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.panelhead h3{font-size:16px;margin:0}.panelhead span{color:var(--muted);font-size:12px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.toolbar input,.toolbar select{background:#080f1c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:9px;min-width:0}.toolbar input{flex:1;min-width:130px}.results{display:grid;gap:10px;max-height:600px;overflow:auto;padding-right:3px}.company{border:1px solid #26364c;background:#111d2e;border-radius:13px;padding:13px}.companytop{display:flex;justify-content:space-between;gap:10px}.company h4{margin:0 0 5px;font-size:14px}.meta{font-size:12px;color:var(--muted);line-height:1.5}.pill{display:inline-block;border-radius:99px;padding:4px 8px;font-size:10px;font-weight:800;margin-top:7px}.pill.no{background:#342d19;color:#ffdb8a}.pill.yes{background:#143a30;color:#7ce9bd}.pill.unknown{background:#252f40;color:#bdcce0}.companyactions{display:flex;gap:6px;flex-wrap:wrap;margin-top:11px}.companyactions button{font-size:11px;padding:7px 9px}.star{font-size:20px;background:transparent;color:#ffce5e;padding:0 5px}.empty{padding:32px 16px;text-align:center;color:var(--muted);font-size:13px;border:1px dashed #31435c;border-radius:12px;line-height:1.6}.mapbox{height:360px;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#0b1422}.maphelp{color:var(--muted);font-size:12px;line-height:1.55;margin-top:10px}.bottompanels{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}.mini-list{display:grid;gap:8px}.mini-row{display:flex;justify-content:space-between;gap:10px;padding:10px;border-radius:9px;background:#111d2e;font-size:12px}.mini-row span:last-child{color:var(--cyan);font-weight:800}.footer{color:#71839d;font-size:11px;line-height:1.6;text-align:center;padding:24px 10px}.modalback{position:fixed;inset:0;background:#0009;display:none;align-items:center;justify-content:center;padding:16px;z-index:1000}.modalback.show{display:flex}.modal{max-width:560px;width:100%;background:#101a2a;border:1px solid var(--line);border-radius:16px;padding:20px;max-height:90vh;overflow:auto}.modal h3{margin-top:0}.modal label{display:block;color:var(--muted);font-size:12px;margin:12px 0 5px}.modal input,.modal select,.modal textarea{width:100%;background:#080f1c;color:var(--text);border:1px solid var(--line);border-radius:9px;padding:10px}.modal textarea{min-height:80px}.modalfoot{display:flex;gap:8px;justify-content:flex-end;margin-top:15px}.leaflet-popup-content-wrapper,.leaflet-popup-tip{background:#101a2a;color:#edf4ff}.leaflet-popup-content{font-family:inherit}.leaflet-container a{color:#55d6e8}
+@media(max-width:900px){.searchgrid{grid-template-columns:1fr 1fr}.search-action{grid-column:span 2}.search-action button{width:100%}.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.bottompanels{grid-template-columns:1fr}.mapbox{height:300px}}
+@media(max-width:520px){.wrap{padding:12px}.top{align-items:flex-start}.badge{font-size:10px}.hero{padding:18px}.searchgrid{grid-template-columns:1fr}.search-action{grid-column:auto}.stats{gap:8px}.stat{padding:12px}.stat .num{font-size:23px}.panel{padding:12px}.brand h1{font-size:18px}.brand p{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+  <div class="brand"><div class="logo">S</div><div><h1>SiteHunter <span style="color:var(--cyan)">Brasil</span></h1><p>Prospecção inteligente para quem cria sites</p></div></div>
+  <div class="badge">● MODO GRATUITO</div>
+</header>
+<section class="hero">
+  <h2>Encontre oportunidades.<br><span>Crie presença digital.</span></h2>
+  <p>Pesquise estabelecimentos públicos por cidade e segmento, confira se os dados disponíveis indicam um site e organize possíveis clientes. Sem chave de API paga e sem cadastro obrigatório.</p>
+  <div class="searchgrid">
+    <div class="field"><label for="city">Cidade, estado ou região</label><input id="city" placeholder="Ex.: Santarém, Pará, Brasil" value=""></div>
+    <div class="field"><label for="segment">Segmento</label><select id="segment">
+      <option value="all">Todos os estabelecimentos</option><option value="hairdresser">Barbearias e salões</option><option value="restaurant">Restaurantes e lanchonetes</option><option value="car_repair">Oficinas mecânicas</option><option value="clothes">Lojas de roupas</option><option value="beauty">Salões de beleza</option><option value="gym">Academias</option><option value="florist">Floriculturas</option><option value="electronics">Assistência eletrônica</option><option value="decor">Decoração e eventos</option><option value="shop">Comércios em geral</option>
+    </select></div>
+    <div class="field"><label for="siteFilter">Filtro de site</label><select id="siteFilter"><option value="all">Todos os resultados</option><option value="no">Sem site identificado</option><option value="yes">Site identificado</option><option value="unknown">Inconclusivo</option></select></div>
+    <div class="search-action"><button id="searchBtn">⌕ Pesquisar empresas</button></div>
+  </div>
+  <div class="smallnote">Fontes gratuitas: OpenStreetMap / Overpass API. A cobertura depende dos dados cadastrados na região; “sem site identificado” não prova que a empresa não tenha site.</div>
+  <div id="status" class="statusline" role="status"></div>
+</section>
+
+<section class="stats">
+  <div class="stat"><div class="label">Empresas carregadas</div><div class="num" id="totalStat">0</div><div class="sub">Resultados desta pesquisa</div></div>
+  <div class="stat"><div class="label">Sem site identificado</div><div class="num" id="noStat">0</div><div class="sub">Verifique antes de abordar</div></div>
+  <div class="stat"><div class="label">Favoritos salvos</div><div class="num" id="favStat">0</div><div class="sub">Guardados neste navegador</div></div>
+  <div class="stat"><div class="label">Contatos conquistados</div><div class="num" id="wonStat">0</div><div class="sub">CRM local</div></div>
+</section>
+
+<div class="layout">
+<section class="panel">
+  <div class="panelhead"><h3>Lista de oportunidades</h3><span id="resultCount">0 resultados</span></div>
+  <div class="toolbar">
+    <input id="textFilter" placeholder="Filtrar por nome ou endereço…">
+    <select id="crmFilter" aria-label="Filtrar por etapa CRM"><option value="all">Todas as etapas</option><option>Nova oportunidade</option><option>Contato realizado</option><option>Aguardando resposta</option><option>Interessado</option><option>Proposta enviada</option><option>Cliente conquistado</option><option>Não contatar novamente</option></select>
+  </div>
+  <div class="toolbar">
+    <button class="secondary" id="exportBtn">↓ Exportar CSV</button>
+    <button class="secondary" id="favoritesBtn">★ Favoritos</button>
+    <button class="ghost" id="allBtn">Ver pesquisa</button>
+    <button class="ghost" id="clearBtn">Limpar lista</button>
+  </div>
+  <div id="results" class="results"><div class="empty">Digite uma cidade e clique em <b>Pesquisar empresas</b>.<br>Os resultados reais virão da fonte pública consultada.</div></div>
+</section>
+<section class="panel">
+  <div class="panelhead"><h3>Mapa de oportunidades</h3><span>OpenStreetMap</span></div>
+  <div id="map" class="mapbox"></div>
+  <div class="maphelp">Os marcadores representam os estabelecimentos retornados pela consulta. O mapa e as consultas dependem de conexão com a internet e dos limites dos serviços públicos.</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;font-size:11px;color:var(--muted)"><span>🟡 Sem site identificado</span><span>🟢 Site identificado</span><span>⚪ Inconclusivo</span></div>
+</section>
+</div>
+
+<div class="bottompanels">
+<section class="panel"><div class="panelhead"><h3>CRM — acompanhamento</h3><span>Salvo localmente</span></div><div id="crmSummary" class="mini-list"><div class="empty">Salve uma empresa e atualize a etapa para acompanhar sua prospecção.</div></div></section>
+<section class="panel"><div class="panelhead"><h3>Como verificar uma oportunidade</h3></div><div class="meta" style="font-size:13px">1. Consulte o resultado e a fonte original.<br><br>2. Use “Pesquisar na web” para procurar o nome comercial e a cidade.<br><br>3. Se não houver evidência suficiente, mantenha como inconclusivo — não afirme que a empresa não tem site.<br><br>4. Entre em contato de forma respeitosa e registre pedidos para não receber novas mensagens.</div></section>
+</div>
+<footer class="footer">SiteHunter Brasil · Criado por Roger Gabriel · Versão inicial gratuita.<br>Este site não garante cobertura nacional completa. O uso de OpenStreetMap e Overpass está sujeito às políticas, disponibilidade e limites dos serviços. Dados e favoritos ficam neste navegador.</footer>
+</div>
+
+<div class="modalback" id="modalBack"><div class="modal">
+  <h3 id="modalTitle">Detalhes da empresa</h3><div id="modalBody"></div>
+  <label for="crmStage">Etapa no CRM</label><select id="crmStage"><option>Nova oportunidade</option><option>Contato realizado</option><option>Aguardando resposta</option><option>Interessado</option><option>Proposta enviada</option><option>Cliente conquistado</option><option>Não contatar novamente</option></select>
+  <label for="notes">Anotações</label><textarea id="notes" placeholder="Ex.: pesquisar responsável, retornar na próxima semana…"></textarea>
+  <div class="modalfoot"><button class="secondary" id="closeModal">Fechar</button><button id="saveCRM">Salvar no CRM</button></div>
+</div></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+const STORE_KEY='sitehunter-brasil-v1';
+let companies=[], saved=loadSaved(), current=null, favoritesOnly=false, map=null, markers=null, mapReady=false;
+const segmentTags={
+ all:'nwr["shop"];nwr["amenity"~"restaurant|cafe|fast_food|bar|clinic|pharmacy|gym|car_repair"];nwr["craft"];nwr["office"]',
+ hairdresser:'nwr["shop"="hairdresser"];nwr["shop"="beauty"]',
+ restaurant:'nwr["amenity"~"restaurant|cafe|fast_food"]',
+ car_repair:'nwr["shop"="car_repair"];nwr["craft"="car_repair"]',
+ clothes:'nwr["shop"="clothes"]',
+ beauty:'nwr["shop"="beauty"];nwr["shop"="hairdresser"]',
+ gym:'nwr["leisure"="fitness_centre"];nwr["amenity"="gym"]',
+ florist:'nwr["shop"="florist"]',
+ electronics:'nwr["shop"="electronics"];nwr["craft"="electronics_repair"]',
+ decor:'nwr["shop"="party"];nwr["shop"="florist"];nwr["craft"="event_planner"]',
+ shop:'nwr["shop"]'
+};
+function loadSaved(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){return {}}}
+function persist(){localStorage.setItem(STORE_KEY,JSON.stringify(saved));updateStats();renderCRM()}
+function msg(t,err=false){const el=$('status');el.textContent=t;el.style.borderColor=err?'#7a353b':'#263d5b';el.style.color=err?'#ffb5b5':'#cfe2ff';el.classList.add('show')}
+function hideMsg(){$('status').classList.remove('show')}
+function escapeHTML(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function websiteOf(t){return t.website||t['contact:website']||t.url||t['contact:url']||''}
+function classify(t){return websiteOf(t)?'yes':'no'}
+function labelStatus(s){return s==='yes'?'Site identificado':'Sem site identificado'}
+function tagVal(t,...keys){for(const k of keys)if(t[k])return t[k];return ''}
+function companyFrom(el){
+ const t=el.tags||{}, name=tagVal(t,'name','brand','operator')||'Estabelecimento sem nome';
+ const center=el.center||el;
+ const lat=center.lat, lon=center.lon;
+ const addr=[t['addr:street'],t['addr:housenumber'],t['addr:suburb'],t['addr:city']].filter(Boolean).join(', ');
+ const website=websiteOf(t);
+ const id=String(el.type)+'/'+String(el.id);
+ return {id,name,segment:tagVal(t,'shop','amenity','craft','office','leisure')||'Estabelecimento comercial',address:addr||tagVal(t,'addr:full','description')||'Endereço não informado',city:tagVal(t,'addr:city')||$('city').value,phone:tagVal(t,'contact:phone','phone','contact:mobile','mobile'),website,lat,lon,status:website?'yes':'no',source:'OpenStreetMap',osmUrl:`https://www.openstreetmap.org/${el.type}/${el.id}`,tags:t};
+}
+function initMap(){if(mapReady||!window.L)return;map=L.map('map').setView([-14.2,-51.9],4);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap contributors'}).addTo(map);markers=L.layerGroup().addTo(map);mapReady=true}
+function setMarker(c){if(!mapReady||!Number.isFinite(c.lat)||!Number.isFinite(c.lon))return;const color=c.status==='yes'?'#35d39a':'#ffcc66';const marker=L.circleMarker([c.lat,c.lon],{radius:7,color,fillColor:color,fillOpacity:.85,weight:2}).bindPopup(`<b>${escapeHTML(c.name)}</b><br>${escapeHTML(c.address)}<br>${escapeHTML(labelStatus(c.status))}`);marker.addTo(markers)}
+function updateMap(){if(!mapReady)return;markers.clearLayers();companies.forEach(setMarker);const points=companies.filter(c=>Number.isFinite(c.lat)&&Number.isFinite(c.lon));if(points.length){const b=L.latLngBounds(points.map(c=>[c.lat,c.lon]));map.fitBounds(b.pad(.12),{maxZoom:13})}}
+function updateStats(){const all=Object.values(saved);$('totalStat').textContent=companies.length;$('noStat').textContent=companies.filter(c=>c.status==='no').length;$('favStat').textContent=all.filter(c=>c.favorite).length;$('wonStat').textContent=all.filter(c=>c.stage==='Cliente conquistado').length}
+function currentList(){
+ const q=$('textFilter').value.trim().toLowerCase(), site=$('siteFilter').value, crm=$('crmFilter').value;
+ return companies.filter(c=>(!favoritesOnly||saved[c.id]?.favorite)&&(!q||`${c.name} ${c.address} ${c.segment}`.toLowerCase().includes(q))&&(site==='all'||c.status===site)&&(crm==='all'||(saved[c.id]?.stage||'Nova oportunidade')===crm))
+}
+function render(){
+ const list=currentList();$('resultCount').textContent=`${list.length} resultado(s)`;const box=$('results');
+ if(!list.length){box.innerHTML='<div class="empty">Nenhum resultado corresponde aos filtros.<br>Experimente mudar os filtros ou pesquisar outra cidade.</div>';updateStats();return}
+ box.innerHTML=list.map(c=>{const s=saved[c.id]||{};const pill=c.status==='yes'?'yes':c.status==='no'?'no':'unknown';return `<article class="company"><div class="companytop"><div><h4>${escapeHTML(c.name)}</h4><div class="meta">${escapeHTML(c.segment)} · ${escapeHTML(c.address)}</div><div class="meta">${c.phone?'☎ '+escapeHTML(c.phone)+' · ':''}${c.website?`<a target="_blank" rel="noopener" href="${escapeHTML(c.website)}">Abrir site</a>`:'Nenhum site encontrado nos dados OSM'}</div><span class="pill ${pill}">${escapeHTML(labelStatus(c.status))}</span><span class="meta"> · Etapa: ${escapeHTML(s.stage||'Nova oportunidade')}</span></div><button class="star" data-star="${escapeHTML(c.id)}" title="Favoritar">${s.favorite?'★':'☆'}</button></div><div class="companyactions"><button class="secondary" data-details="${escapeHTML(c.id)}">Detalhes / CRM</button><button class="secondary" data-web="${escapeHTML(c.id)}">Pesquisar na web</button><button class="ghost" data-source="${escapeHTML(c.id)}">Fonte</button></div></article>`}).join('');
+ updateStats()
+}
+function renderCRM(){const box=$('crmSummary'), entries=Object.entries(saved).filter(([id,v])=>v.stage&&v.stage!=='Nova oportunidade').slice(-8).reverse();if(!entries.length){box.innerHTML='<div class="empty">Salve uma empresa e atualize a etapa para acompanhar sua prospecção.</div>';return}box.innerHTML=entries.map(([id,v])=>`<div class="mini-row"><span>${escapeHTML(v.name||id)}</span><span>${escapeHTML(v.stage)}</span></div>`).join('')}
+function getById(id){return companies.find(c=>c.id===id)||saved[id]}
+function openModal(id){const c=getById(id);if(!c)return;current=c;const s=saved[id]||{};$('modalTitle').textContent=c.name;$('modalBody').innerHTML=`<div class="meta">${escapeHTML(c.segment)}<br>${escapeHTML(c.address)}<br>${c.phone?'Telefone: '+escapeHTML(c.phone)+'<br>':''}Status: ${escapeHTML(labelStatus(c.status))}<br>Fonte: ${escapeHTML(c.source||'Registro salvo')}<br>${c.website?'Site: '+escapeHTML(c.website):'Não foi encontrado site nos dados consultados'}</div>`;$('crmStage').value=s.stage||'Nova oportunidade';$('notes').value=s.notes||'';$('modalBack').classList.add('show')}
+function makeSearchUrl(c){return 'https://www.google.com/search?q='+encodeURIComponent('"'+c.name+'" '+(c.city||$('city').value)+' site')}
+async function search(){
+ const city=$('city').value.trim();if(!city){msg('Digite uma cidade ou região para iniciar a pesquisa.',true);return}
+ const btn=$('searchBtn');btn.disabled=true;btn.textContent='Pesquisando…';hideMsg();companies=[];render();if(mapReady)markers.clearLayers();
+ try{
+  msg('Localizando a região…');const geoUrl='https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q='+encodeURIComponent(city);
+  const gr=await fetch(geoUrl,{headers:{'Accept-Language':'pt-BR'}});if(!gr.ok)throw new Error('O serviço de localização respondeu com erro HTTP '+gr.status);
+  const geos=await gr.json();if(!geos.length)throw new Error('Não foi possível localizar essa cidade. Tente “Cidade, Estado, Brasil”.');
+  const g=geos[0], bb=g.boundingbox.map(Number), south=bb[0],north=bb[1],west=bb[2],east=bb[3];
+  if(Math.abs(north-south)>2.5||Math.abs(east-west)>2.5)msg('A região encontrada é grande; a consulta pode demorar. Se necessário, pesquise uma cidade ou região menor.');
+  else msg('Região localizada. Consultando estabelecimentos públicos no OpenStreetMap…');
+  const tagExpr=segmentTags[$('segment').value]||segmentTags.all;
+  const clauses=tagExpr.split(';').map(x=>`${x}( ${south},${west},${north},${east});`).join('');
+  const query=`[out:json][timeout:25];(${clauses});out center tags 250;`;
+  const endpoints=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+  let data=null,lastError=null;
+  for(const ep of endpoints){try{const r=await fetch(ep,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:'data='+encodeURIComponent(query)});if(!r.ok)throw new Error('HTTP '+r.status);data=await r.json();break}catch(e){lastError=e}}
+  if(!data)throw new Error('As fontes de pesquisa gratuitas estão temporariamente indisponíveis. Tente novamente mais tarde. '+(lastError?.message||''));
+  companies=(data.elements||[]).map(companyFrom).filter(c=>c.name!=='Estabelecimento sem nome'&&Number.isFinite(c.lat)&&Number.isFinite(c.lon));
+  const seen=new Set();companies=companies.filter(c=>{if(seen.has(c.id))return false;seen.add(c.id);return true});
+  companies.sort((a,b)=>(a.status==='no'?-1:1)-(b.status==='no'?-1:1)||a.name.localeCompare(b.name,'pt-BR'));
+  $('city').value=g.display_name.split(',').slice(0,3).join(',').trim();
+  msg(`Pesquisa concluída: ${companies.length} estabelecimento(s) retornado(s). “Sem site identificado” significa apenas que não há endereço de site nos dados consultados; confira antes de entrar em contato.`);
+  initMap();updateMap();render();
+  if(!companies.length)msg('A consulta terminou, mas não retornou estabelecimentos com nome e localização nessa região. Tente outro segmento ou uma região próxima.',true);
+ }catch(e){msg('Não foi possível concluir a pesquisa: '+e.message+'. Confira sua conexão e tente novamente mais tarde.',true);companies=[];render()}
+ finally{btn.disabled=false;btn.textContent='⌕ Pesquisar empresas'}
+}
+function exportCSV(){const list=currentList();if(!list.length){msg('Não há resultados para exportar.',true);return}const headers=['Nome','Segmento','Cidade/região','Endereço','Telefone','Site','Status','Etapa CRM','Anotações','Fonte','URL da fonte'];const rows=list.map(c=>[c.name,c.segment,c.city,c.address,c.phone,c.website,labelStatus(c.status),saved[c.id]?.stage||'Nova oportunidade',saved[c.id]?.notes||'',c.source,c.osmUrl]);const csv='\ufeff'+[headers,...rows].map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='sitehunter-oportunidades.csv';a.click();URL.revokeObjectURL(a.href)}
+$('searchBtn').addEventListener('click',search);$('city').addEventListener('keydown',e=>{if(e.key==='Enter')search()});$('textFilter').addEventListener('input',render);$('siteFilter').addEventListener('change',render);$('crmFilter').addEventListener('change',render);
+$('exportBtn').addEventListener('click',exportCSV);$('favoritesBtn').addEventListener('click',()=>{favoritesOnly=true;render();msg('Mostrando apenas favoritos. Clique em “Ver pesquisa” para voltar a todos os resultados.')});$('allBtn').addEventListener('click',()=>{favoritesOnly=false;render();hideMsg()});
+$('clearBtn').addEventListener('click',()=>{companies=[];render();if(mapReady)markers.clearLayers();msg('Lista da pesquisa limpa. Favoritos e CRM salvos não foram apagados.')});
+$('results').addEventListener('click',e=>{const star=e.target.closest('[data-star]');if(star){const id=star.dataset.star,c=getById(id);saved[id]={...(saved[id]||{}),name:c.name,stage:saved[id]?.stage||'Nova oportunidade',favorite:!saved[id]?.favorite,notes:saved[id]?.notes||'',status:c.status};persist();render();return}const det=e.target.closest('[data-details]');if(det){openModal(det.dataset.details);return}const web=e.target.closest('[data-web]');if(web){const c=getById(web.dataset.web);window.open(makeSearchUrl(c),'_blank','noopener');return}const src=e.target.closest('[data-source]');if(src){const c=getById(src.dataset.source);window.open(c.osmUrl,'_blank','noopener')}});
+$('closeModal').addEventListener('click',()=>$('modalBack').classList.remove('show'));$('modalBack').addEventListener('click',e=>{if(e.target.id==='modalBack')$('modalBack').classList.remove('show')});
+$('saveCRM').addEventListener('click',()=>{if(!current)return;const old=saved[current.id]||{};saved[current.id]={...old,id:current.id,name:current.name,stage:$('crmStage').value,notes:$('notes').value,favorite:!!old.favorite,status:current.status,segment:current.segment,address:current.address,city:current.city,phone:current.phone,website:current.website,source:current.source,osmUrl:current.osmUrl};persist();$('modalBack').classList.remove('show');render();msg('Empresa salva no CRM deste navegador.')});
+initMap();updateStats();renderCRM();
+})();
+</script>
+</body>
+</html>
